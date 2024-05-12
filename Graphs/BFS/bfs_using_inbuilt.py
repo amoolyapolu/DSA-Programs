@@ -32,4 +32,7 @@ def main():
 
 if __name__ == "__main__":
   main()
-  
+
+
+#timecomplexity O(v+e)
+#spacecomplexity O(v)
