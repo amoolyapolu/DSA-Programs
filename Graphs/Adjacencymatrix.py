@@ -13,6 +13,12 @@ class Graph:
       
   def get_degree(self,vertex):
       return sum(self.adj_matrix[vertex])
+
+  def addVertex(self):
+    self.num_vertices=self.num_vertices+1
+    row=[0 for i in range(num_vertices)]
+    for j in range(len(self.adj_matrix)):
+      self.adj_matrix[j].append(row)
 if __name__ == "__main__":
     # Initialize an adjacency matrix with 4 vertices
     graph = Graph(4)
@@ -21,6 +27,8 @@ if __name__ == "__main__":
     graph.add_edge(0, 1)
     graph.add_edge(0, 2)
     graph.add_edge(1, 3)
+    graph.display_adj_matrix()
+    graph.addVertex()
     graph.display_adj_matrix()
     
 for vertex in range(graph.num_vertices):
