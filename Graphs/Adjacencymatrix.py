@@ -16,9 +16,31 @@ class Graph:
 
   def addVertex(self):
     self.num_vertices=self.num_vertices+1
-    row=[0 for i in range(num_vertices)]
-    for j in range(len(self.adj_matrix)):
-      self.adj_matrix[j].append(row)
+    for row in self.adj_matrix:
+        row.append(0)
+
+    # print(self.adj_matrix)
+    
+    self.adj_matrix.append([0]*self.num_vertices)
+  def removeVertex(self,vertex):  
+    if vertex>=self.num_vertices:
+        print("cant remove")
+        return
+    
+    else:
+        while vertex<self.num_vertices-1:
+            for i in range(0,self.num_vertices):
+                self.adj_matrix[i][vertex] = self.adj_matrix[i][vertex+1]
+            for j in range(0,self.num_vertices):
+                self.adj_matrix[vertex][j] = self.adj_matrix[vertex+1][j]
+            vertex=vertex+1
+        for row in self.adj_matrix:
+            row.pop()
+        self.adj_matrix.pop()
+        self.num_vertices = self.num_vertices-1
+  
+        
+        
 if __name__ == "__main__":
     # Initialize an adjacency matrix with 4 vertices
     graph = Graph(4)
@@ -27,9 +49,11 @@ if __name__ == "__main__":
     graph.add_edge(0, 1)
     graph.add_edge(0, 2)
     graph.add_edge(1, 3)
-    graph.display_adj_matrix()
+    # graph.display_adj_matrix()
     graph.addVertex()
     graph.display_adj_matrix()
-    
+    print("removing vertex")
+    graph.removeVertex(1)
+    graph.display_adj_matrix()
 for vertex in range(graph.num_vertices):
     print(f"Degree of vertex {vertex}: {graph.get_degree(vertex)}")
