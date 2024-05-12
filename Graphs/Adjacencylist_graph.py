@@ -25,7 +25,30 @@ class Graph:
   def add_vertex(self):
         self.v += 1
         self.adj_list.append(None)
-      
+        
+  def del_vertex(self, k):
+    # Remove vertex k and its incident edges from other vertices' adjacency lists
+    for i in range(self.v):
+        prev = None
+        temp = self.adj_list[i]
+        while temp:
+            if temp.node == k:
+                # Remove edge incident to vertex k
+                if prev:
+                    prev.next = temp.next
+                else:
+                    self.adj_list[i] = temp.next
+            else:
+                # Remove reference to vertex k from other vertices' adjacency lists
+                if temp.node > k:
+                    temp.node -= 1  # Decrement vertex number if greater than k
+            prev = temp
+            temp = temp.next
+    # Remove the last element
+    self.adj_list.pop(k)
+    self.v -= 1
+
+        
 if __name__ == "__main__":
  
     V = 6
@@ -44,3 +67,6 @@ if __name__ == "__main__":
     graph.add_vertex()
     graph.display_graph()
  
+    graph.del_vertex(4)
+    print("Adjacency list after deleting vertex")
+    graph.display_graph()
