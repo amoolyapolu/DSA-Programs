@@ -1,3 +1,5 @@
+#reverse the adjlist and try using  visit
+
 vis = []
 def DFS(u,adj):
     vis[u] = True
