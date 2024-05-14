@@ -38,3 +38,7 @@ if __name__ == "__main__":
 
     # Function Call
     solve(N, Edges)
+
+
+# Time Complexity: O(V2)
+# Auxiliary Space: O(|V| + |E|)
