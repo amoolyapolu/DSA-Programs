@@ -39,12 +39,11 @@ if matrix[0][0]==0:
     for j in range(c):
         matrix[0][j]=0
 
-
-
-
-""" Another approach https://www.youtube.com/watch?v=dSxt3ZCbIqA """
         
 if rowZero:
     for i in range(r):
         matrix[i][0]=0
 print(matrix)
+
+
+""" Another approach https://www.youtube.com/watch?v=dSxt3ZCbIqA """
