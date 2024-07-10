@@ -38,6 +38,11 @@ for i in range(1,r):
 if matrix[0][0]==0:
     for j in range(c):
         matrix[0][j]=0
+
+
+
+
+""" Another approach https://www.youtube.com/watch?v=dSxt3ZCbIqA """
         
 if rowZero:
     for i in range(r):
