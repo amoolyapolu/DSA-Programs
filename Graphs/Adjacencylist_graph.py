@@ -1,72 +1,106 @@
-class adjNode:
-  def __init__(self,node):
-    self.node=node
-    self.next = None
+class AdjNode:
+    def __init__(self, data):
+        self.vertex = data
+        self.next = None
 
-class Graph:
-  def __init__(self,vertices):
-    self.v=vertices
-    self.adj_list = [None] * self.v
 
-  def addedge(self,s,d):
-    node = adjNode(d)
-    node.next = self.adj_list[s]
-    self.adj_list[s] = node
-    # print(self.adj_list)
-    
-  def display_graph(self):
-    for i in range(self.v):
-      print(i,end=" ")
-      temp=self.adj_list[i]
-      while temp:
-        print("->", temp.node, end=" ")
-        temp = temp.next
-      print("\n")
-  def add_vertex(self):
-        self.v += 1
-        self.adj_list.append(None)
+class AdjList:
+    def __init__(self, vertices):
+        self.v = vertices
+        self.graph = [None] * self.v
+
+    def addedge(self, source, destination):
+        print("source",source,"V",self.v)
+        if source >= self.v or destination >= self.v or source < 0 or destination < 0:
+            print(f"Error: Vertex out of bounds. Source: {source}, Destination: {destination}")
+            return
         
-  def del_vertex(self, k):
-    # Remove vertex k and its incident edges from other vertices' adjacency lists
-    for i in range(self.v):
-        prev = None
-        temp = self.adj_list[i]
+        # Check if the edge already exists to avoid duplicates
+        temp = self.graph[source]
         while temp:
-            if temp.node == k:
-                # Remove edge incident to vertex k
-                if prev:
-                    prev.next = temp.next
-                else:
-                    self.adj_list[i] = temp.next
-            else:
-                # Remove reference to vertex k from other vertices' adjacency lists
-                if temp.node > k:
-                    temp.node -= 1  # Decrement vertex number if greater than k
-            prev = temp
+            if temp.vertex == destination:
+                print(f"Edge already exists between {source} and {destination}")
+                return
             temp = temp.next
-    # Remove the last element
-    self.adj_list.pop(k)
-    self.v -= 1
 
-        
+        # Add the edge from source to destination
+        node = AdjNode(destination)
+        node.next = self.graph[source]
+        self.graph[source] = node
+
+    def addvertex(self, vk, source, destination):
+        if vk >= self.v or source >= self.v or destination >= self.v or vk < 0 or source < 0 or destination < 0:
+            print(f"Error: Vertex out of bounds. vk: {vk}, Source: {source}, Destination: {destination}")
+            return
+
+        self.addedge(source, vk)
+        self.addedge(vk, destination)
+
+    def print_graph(self):
+        for i in range(self.v):
+            print(f"Vertex {i}:", end="")
+            temp = self.graph[i]
+            while temp:
+                print(f" -> {temp.vertex}", end="")
+                temp = temp.next
+            print()
+
+    def delvertex(self, k):
+        if k >= self.v or k < 0:
+            print(f"Error: Vertex {k} does not exist.")
+            return
+
+        # Remove all edges to the vertex k
+        for i in range(self.v):
+            prev = None
+            temp = self.graph[i]
+            while temp:
+                if temp.vertex == k:
+                    if prev:
+                        prev.next = temp.next
+                    else:
+                        self.graph[i] = temp.next
+                    temp = None
+                else:
+                    prev = temp
+                    temp = temp.next
+
+        # Remove all edges from the vertex k
+        self.graph[k] = None
+
+
+# Driver code
 if __name__ == "__main__":
- 
     V = 6
-    graph = Graph(V)
+    graph = AdjList(V)
+
+    # Adding edges
     graph.addedge(0, 1)
     graph.addedge(0, 3)
     graph.addedge(0, 4)
     graph.addedge(1, 2)
     graph.addedge(3, 2)
     graph.addedge(4, 3)
- 
-    print("Initial adjacency list")
-    graph.display_graph()
     
-    print("Add vertex")
-    graph.add_vertex()
-    graph.display_graph()
- 
-    graph.del_vertex(4)
-    print("Adjacency list after deleting vertex")
-    graph.display_graph()
+
+    print("Initial adjacency list")
+    graph.print_graph()
+
+    # Adding an existing edge (should be handled)
+    graph.addedge(0, 1)
+
+    # Adding an edge with an out-of-bounds vertex (should be handled)
+    graph.addedge(0, 6)
+
+    # Add vertex
+    graph.addvertex(5, 3, 2)
+    print("\nAdjacency list after adding vertex")
+    graph.print_graph()
+
+    # Attempt to delete a non-existing vertex (should be handled)
+    graph.delvertex(7)
+
+    # Delete vertex
+    graph.delvertex(4)
+    print("\nAdjacency list after deleting vertex")
+    graph.print_graph()
