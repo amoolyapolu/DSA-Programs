@@ -1,0 +1,61 @@
+from typing import List
+
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        # Initialize a dictionary to keep track of the count of each type of fruit
+        fruit_counter = {}
+        # Initialize variables to keep track of the starting index of the current window
+        start_index = 0
+        # Initialize a variable to store the maximum length of a valid window
+        max_length = 0
+        
+        # Manual loop with index tracking
+        end_index = 0
+        while end_index < len(fruits):
+            fruit = fruits[end_index]
+            
+            # Increment the count for the current fruit
+            if fruit in fruit_counter:
+                fruit_counter[fruit] += 1
+            else:
+                fruit_counter[fruit] = 1
+            
+            # If the dictionary has more than two types of fruits, shrink the window
+            while len(fruit_counter) > 2:
+                start_fruit = fruits[start_index]
+                fruit_counter[start_fruit] -= 1
+                # Remove the fruit from dictionary if its count drops to 0
+                if fruit_counter[start_fruit] == 0:
+                    del fruit_counter[start_fruit]
+                # Move the start index forward
+                start_index += 1
+            
+            # Calculate the current length of the valid window and update max_length
+            current_length = end_index - start_index + 1
+            max_length = max(max_length, current_length)
+            
+            # Move to the next fruit
+            end_index += 1
+        
+        # Return the maximum length of the subarray with at most two types of fruits
+        return max_length
+
+# Example usage:
+if __name__ == "__main__":
+    solution = Solution()
+    
+    # Test case 1
+    fruits = [1, 2, 1]
+    print(solution.totalFruit(fruits))  # Output: 3
+    
+    # Test case 2
+    fruits = [0, 1, 2, 2]
+    print(solution.totalFruit(fruits))  # Output: 3
+    
+    # Test case 3
+    fruits = [1, 2, 3, 2, 2]
+    print(solution.totalFruit(fruits))  # Output: 4
+    
+    # Test case 4
+    fruits = [3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4]
+    print(solution.totalFruit(fruits))  # Output: 5
