@@ -1,0 +1,74 @@
+Binary Search Trees (BSTs) have several issues and limitations that can affect their performance and efficiency in specific scenarios.
+Some of the key issues with BSTs include:
+
+Unbalanced BSTs: 
+===============
+BSTs can become unbalanced due to the order in which elements are inserted.
+The tree can degenerate into a linked list if elements are inserted in a sorted or nearly sorted order. 
+Unbalanced BSTs lead to poor time complexities for searching, insertion, and deletion operations, 
+becoming closer to linear time (O(n)) instead of the optimal logarithmic time (O(log n)).
+
+Degenerate Trees: Degenerate trees are extreme cases of unbalanced BSTs where each node has only one child, 
+essentially forming a linked list. Degenerate trees result in very poor time complexities for all operations, rendering the advantages of using BSTs ineffective.
+
+Why BSTs Become Unbalanced
+===========================
+Order of Insertion:
+
+If elements are inserted in a sorted or nearly sorted order, the BST can become skewed.
+For example, inserting the elements [1, 2, 3, 4, 5] into an initially empty BST results in a right-leaning tree where each node has only a right child.
+Degeneration into a Linked List:
+
+In the worst case, the BST can resemble a linked list. This happens when each node only has one child.
+Such a structure makes all operations, including search, insertion, and deletion, perform in O(n) time because you may need to traverse all nodes linearly.
+
+Implications
+Search, Insertion, and Deletion:
+
+For a balanced BST, these operations are performed in O(log n) time because each comparison effectively halves the number of nodes to consider.
+In an unbalanced BST, these operations degrade to O(n) because you may need to traverse the entire height of the tree, which could be as long as the number of nodes.
+Tree Height:
+
+The height of the tree is crucial. In a balanced BST, the height is approximately log₂(n), where n is the number of nodes.
+In an unbalanced BST, the height can be as large as n, leading to inefficient operations.
+Solutions to Maintain Balance
+Self-Balancing BSTs:
+
+AVL Trees: Automatically perform rotations to keep the tree balanced after each insertion and deletion.
+Red-Black Trees: Ensure the tree remains approximately balanced with specific properties and rules.
+Splay Trees: Adjust the tree structure based on access patterns, bringing frequently accessed elements closer to the root.
+Balancing Techniques:
+
+Rotations: Techniques like right rotation and left rotation are used to maintain or restore balance in self-balancing trees.
+
+
+
+Performance Issues
+=================
+Unbalanced Trees: Unbalanced or degenerate BSTs can significantly degrade performance for operations like searching, insertion, and deletion, 
+                  potentially requiring linear time (O(n)) in the worst case.
+Complex Balancing
+===================
+Balancing Overhead: Keeping a BST balanced involves complex algorithms. Self-balancing trees (e.g., AVL trees, Red-Black trees) help but add code complexity and overhead.
+
+Lack of Unique Keys
+===================
+Duplicate Keys: Traditional BSTs generally do not support duplicate keys, and handling duplicates can vary by implementation,
+either overwriting the existing value or rejecting the insertion.
+
+Memory Overhead
+===============
+Additional Memory: Each BST node needs extra memory for pointers to child nodes, which can become substantial for large or poorly balanced trees.
+
+Not Suitable for Dynamic Datasets
+==================================
+Frequent Changes: BSTs struggle with frequent insertions and deletions, which can lead to imbalances and increased need for balancing operations.
+
+Limited Search Performance for Equal Keys
+==========================================
+Efficiency: Searching for the next greater or lesser element for equal keys in BSTs can be less efficient compared to searching for unique keys.
+
+Solutions
+==========
+Self-Balancing BSTs: AVL trees, Red-Black trees, and Splay trees address these issues by automatically maintaining balance, 
+ensuring better performance for operations. Depending on use cases and dataset characteristics, self-balancing trees might be preferable to traditional BSTs.
