@@ -1,0 +1,90 @@
+->  we use current for traversing why is parent used to check if the new node has to be in left or right?
+
+The reason we use both current and parent when inserting into a Binary Search Tree (BST) is because:
+
+current is used to traverse the tree to find the appropriate location for the new node.
+Once we reach the correct position (when current becomes None), parent holds a reference to the node where the new node needs to be attached as either the left or right child.
+Here’s a step-by-step breakdown of why parent is needed:
+
+Traversing with current:
+
+We use current to move down the tree (left or right) while comparing the value to be inserted with the current node's value.
+Once current becomes None, it means we have found the correct position in the tree where the new node should be inserted.
+Keeping track of the parent:
+
+While traversing, we need to know which node (parent) the new node will be attached to.
+When current becomes None, parent holds the last non-null node, which is the node to which the new node will be attached (either as the left or right child).
+
+This is why we need to store the parent during traversal.
+
+
+-> during deletion why only use right.data??
+
+When deleting a node with two children in a Binary Search Tree (BST), you have two main options for replacing the value of the node being deleted:
+
+In-order successor (smallest value in the right subtree).
+In-order predecessor (largest value in the left subtree).
+In the current implementation, we're choosing the in-order successor, which is the smallest node in the right subtree. Here's why this is commonly used:
+
+Why Use the Right Subtree for the In-order Successor?
+Preserving the BST property:
+
+In a BST, for any node:
+All nodes in the left subtree must have values less than the node’s value.
+All nodes in the right subtree must have values greater than or equal to the node’s value.
+By choosing the in-order successor (smallest node in the right subtree), we guarantee that the value used to replace the node being deleted is the next larger value in the tree. 
+This maintains the BST property.
+
+In-order traversal consistency:
+
+The in-order traversal of a BST produces a sorted sequence. The in-order successor is the smallest node greater than the current node in this sequence.
+By replacing the deleted node with the in-order successor, we ensure that the tree remains sorted and the in-order traversal still works correctly.
+
+Could We Use the Left Subtree (In-order Predecessor)?
+Yes, you could also choose the in-order predecessor, which is the largest node in the left subtree. The logic would be very similar, but you would need to:
+
+Find the largest node in the left subtree.
+Replace the deleted node with this largest node.
+
+if using inorder predecessor ,the code for delete changes revolving around left tree instead of right
+
+def find_max(self, node):
+    # Find the largest node in the left subtree
+    if node.right is None:
+        return node
+    return self.find_max(node.right)
+
+def delete_node(self, root, value):
+    if root is None:
+        return root
+    
+    if value < root.data:
+        root.left = self.delete_node(root.left, value)
+    elif value > root.data:
+        root.right = self.delete_node(root.right, value)
+    else:
+        if root.left is None:
+            return root.right
+        elif root.right is None:
+            return root.left
+        
+        # Replace with in-order predecessor
+        temp = self.find_max(root.left)
+        root.data = temp.data
+        root.left = self.delete_node(root.left, temp.data)
+    
+    return root
+    
+In Summary:
+Why use the right subtree (in-order successor)?
+
+It's a common convention because it preserves the BST property by replacing the node with the next larger element.
+The in-order successor is easy to find by going to the smallest node in the right subtree.
+Can we use the left subtree (in-order predecessor)?
+
+Yes, it’s equally valid, but we must replace the node with the largest smaller element from the left subtree.
+Both methods are correct, and the choice depends on your preference or the specific requirements of the problem.
+
+
+
+
