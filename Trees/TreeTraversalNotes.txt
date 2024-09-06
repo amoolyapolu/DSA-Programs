@@ -1,0 +1,21 @@
+Traversing a BST is a fundamental operation. There are three common types of depth-first traversal:
+
+Inorder Traversal (left, root, right): This produces a sorted sequence from the BST.
+Preorder Traversal (root, left, right): Useful for creating a copy of the tree.
+Postorder Traversal (left, right, root): Useful for deleting a tree.
+
+Though this speaks of postorder traversal as suitable for deleting a tree,why use inorder mechanism while deleting a node in our BST implementation??
+
+postorder traversal is typically used when deleting an entire tree, because in postorder, you visit the children (left, right) before the root, 
+ensuring that you delete the subtrees before the parent node.
+
+However, inorder traversal is not used directly in the delete_node function. 
+Instead, the function uses the in-order successor (or optionally the in-order predecessor) when deleting a node with two children. 
+These are two different concepts.
+
+Postorder Traversal for Deleting a Tree:
+When you want to delete an entire tree, you use postorder traversal because it ensures that you:
+
+Visit and delete all the left and right children of a node.
+Delete the root of the subtree after its children are gone.
+This prevents dangling references to child nodes and ensures safe deletion.
