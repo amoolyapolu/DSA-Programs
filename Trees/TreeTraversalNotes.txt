@@ -14,8 +14,48 @@ Instead, the function uses the in-order successor (or optionally the in-order pr
 These are two different concepts.
 
 Postorder Traversal for Deleting a Tree:
+==========================================
 When you want to delete an entire tree, you use postorder traversal because it ensures that you:
 
 Visit and delete all the left and right children of a node.
 Delete the root of the subtree after its children are gone.
 This prevents dangling references to child nodes and ensures safe deletion.
+
+def delete_tree(self, root):
+    if root is None:
+        return
+    
+    # First delete the left and right subtrees
+    self.delete_tree(root.left)
+    self.delete_tree(root.right)
+    
+    # Then delete the root node
+    print(f"Deleting node: {root.data}")
+    del root
+
+
+In-order Successor in Node Deletion (When Deleting a Single Node):
+===================================================================
+When you’re deleting a single node in a BST, you are not deleting the entire tree; you are just adjusting the tree’s structure. In this case, using the in-order successor (or predecessor) helps you maintain the BST property after deletion.
+
+Here’s why:
+
+In-order successor is the smallest node greater than the node being deleted, and is guaranteed to maintain the correct order of the BST.
+
+The in-order traversal of a BST always results in a sorted sequence.
+By replacing the deleted node with the in-order successor, you ensure that the BST stays sorted.
+In-order successor only replaces the value of the node, and then you recursively delete the in-order successor (which is guaranteed to have at most one child).
+
+
+Why Not Use Postorder in delete_node?
+========================================
+Postorder traversal is used to delete an entire tree, but that’s not what we are doing here. We are only deleting one node and rearranging the tree.
+
+In-order successor or in-order predecessor is specifically used to maintain the BST structure after deleting a node with two children. It replaces the node’s value with the next smallest or largest value, which keeps the in-order properties intact.
+
+
+Summary:
+==========
+POST_ORDER TRAVERSAL is used when you need to delete an ENTIRE TREE, as it ensures that you delete child nodes before the parent.
+IN_ORDER successor (or predecessor) is used in the delete_node function for deleting a SINGLE NODE in a BST with two children, ensuring the tree remains correctly ordered.
+The two techniques are used in different contexts: one for deleting an entire tree (postorder) and the other for maintaining the tree's structure when removing a single node (in-order successor).
