@@ -1,0 +1,24 @@
+
+### Key Differences of balanced tree implementations
+
+1. **Efficiency**:
+   - **Current Version (Two Passes)**: In this version, you are calling `getHeight` separately for the left and right subtrees and then recursively calling `isBalanced` on the left and right subtrees. This leads to recalculating the height for the same subtrees multiple times.
+     - **Time Complexity**: O(n²) in the worst case, where `n` is the number of nodes. Each call to `isBalanced` computes the height of subtrees, and the height computation itself can take linear time in unbalanced trees.
+   
+   - **Previous Version (Single Pass with DFS)**: The previous implementation (`dfsHeight`) calculates both the height and balance status in a single pass through the tree. This avoids redundant height calculations.
+     - **Time Complexity**: O(n), where `n` is the number of nodes. Each node is visited once, and the height and balance information is propagated up the tree.
+
+2. **Structure**:
+   - **Current Version**: This solution separates the height calculation (`getHeight`) and balance check (`isBalanced`) into different methods. The `isBalanced` method first checks the heights of the left and right subtrees and then makes recursive calls to check if both subtrees are balanced.
+   - **Previous Version**: The earlier approach combines the height and balance check into one method (`dfsHeight`), which directly returns `-1` when the tree is found to be unbalanced. This is a more concise and efficient approach.
+
+
+### Pros and Cons
+
+| Feature                   | Current Version (Two Passes)                                   | Previous Version (DFS Single Pass)                             |
+|----------------------------|---------------------------------------------------------------|----------------------------------------------------------------|
+| **Time Complexity**         | O(n²) (due to recalculation of height)                        | O(n) (each node is visited once)                               |
+| **Code Structure**          | Separates balance check and height calculation                | Combines height and balance check, leading to more efficiency  |
+| **Ease of Understanding**   | More intuitive, splits balance and height into two functions  | Slightly more complex but more elegant                         |
+| **Efficiency**              | Less efficient for large trees                               | More efficient for large trees                                 |
+
